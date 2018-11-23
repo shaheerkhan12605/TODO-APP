@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html>
+	<script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.6.9/angular.min.js"></script>
+	<script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.6.9/angular-route.js"></script>
+	<link rel="stylesheet" type="text/css" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css">
+<body ng-app="myApp">
+
+		<div class="container">
+			<div class="row center">
+				<a href="#/!" class="h1">TODOS</a>		
+			</div>
+		</div>
+		<div class="container">
+		<div class="row center">
+			<div class="col-md-12">
+				
+				<a class="btn btn-primary btn-sm center" href="#!create">Add new TODO</a>
+			</div>
+		</div>
+	</div>
+	<div ng-view></div>
+
+	<script>
+		var app = angular.module("myApp", ["ngRoute"]);
+		app.config(function($routeProvider) {
+		    $routeProvider
+		    .when("/", {
+		        templateUrl : "list.html",
+		        controller :'listController'
+		    })
+		    .when("/create", {
+		        templateUrl : "create.html",
+		        controller :'createController'
+		    })
+		    .when("/edit/:id", {
+		        templateUrl : "create.html",
+		        controller : 'editController'
+		    });
+		});
+		app.controller('listController',function($scope,TODOS){
+			$scope.todos=[];
+			$scope.getTodos=function(){
+				alert("here")
+				$scope.todos=TODOS.get();
+			};
+		});
+		app.controller('createController',function($scope,TODOS,$location){
+			$scope.update=false;
+			$scope.add=function(item){
+				TODOS.push(item);
+				console.log(TODOS.todos)
+				$location.path('/');
+			}
+		});
+		app.controller('editController',function($scope,$routeParams,TODOS,$location){
+			$scope.update=true;
+			let id=$routeParams.id;
+			$scope.newItem=TODOS.getItem(id);
+			$scope.updateItem=function(newItem){
+				// console.log('here update')
+				TODOS.put(id,newItem);
+				$location.path('/');
+
+			}
+			$scope.deleteItem=function(newItem){
+				TODOS.delete(newItem);
+				$location.path('/');
+
+			}
+		});
+		app.service('TODOS',function(){
+			this.todos=[];
+			this.get=function(){
+				// alert("IN service")
+				return this.todos;
+			}
+			this.getItem=function(id){
+				return this.todos[id];
+			}
+			this.push=function(item){
+				let id=this.todos.indexOf(item)
+				if(id==-1){
+					this.todos.push(item)
+				}else{
+					alert("item already exist")
+				}
+			}
+			this.delete=function(item){
+				let index=this.todos.indexOf(item);
+				this.todos.splice(index,1);
+			}
+			this.put=function(index,item){
+				this.todos[index]=item;
+				console.log(this.todos)
+			}
+		});
+	</script>
+
+</body>
+</html>

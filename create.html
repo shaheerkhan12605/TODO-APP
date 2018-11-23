@@ -1,0 +1,18 @@
+<section>
+	<div class="row"> 
+		<div class="col-md-8">
+			<input type="text" name="edit" class="form-control" ng-model="newItem">
+		</div>
+		<div class="col-md-3">
+			<button class="btn btn-sm btn-primary" ng-show="!update" ng-click="add(newItem)">Add TODO</button>
+			<button class="btn btn-sm btn-success" ng-show="update" ng-click="updateItem(newItem)">update TODO</button>	
+			<button class="btn btn-sm btn-delete" ng-show="update" ng-click="deleteItem(newItem)">Delete TODO</button>	
+			<a class="btn btn-sm btn-warning" href="#!/">back</a>	
+		</div>
+	</div>
+	<!-- <div class="row">
+		<div class="col-md-3">
+			<a href="#!/" class="btn btn-success btn-sm">Back</a>
+		</div>
+	</div> -->
+</section>
