@@ -8,7 +8,8 @@ this app is working fine on localhost (I've used Wamp)
 # Service
  I have created a basic service to share /update data of todos list here's the code 
  
- ## app.service('TODOS',function(){
+ ## 
+ app.service('TODOS',function(){
 			this.todos=[];
 			this.get=function(){
 				// alert("IN service")
@@ -36,3 +37,49 @@ this app is working fine on localhost (I've used Wamp)
 		});
 ##
 
+# controllers 
+I have created 3 controllers in it 
+
+### listController 
+which is the main controller 
+## 
+app.controller('listController',function($scope,TODOS){
+			$scope.todos=[];
+			$scope.getTodos=function(){
+				alert("here")
+				$scope.todos=TODOS.get();
+			};
+		});
+##
+### editController 
+To update and delete TODOS List 
+##
+app.controller('editController',function($scope,$routeParams,TODOS,$location){
+			$scope.update=true;
+			let id=$routeParams.id;
+			$scope.newItem=TODOS.getItem(id);
+			$scope.updateItem=function(newItem){
+				// console.log('here update')
+				TODOS.put(id,newItem);
+				$location.path('/');
+
+			}
+			$scope.deleteItem=function(newItem){
+				TODOS.delete(newItem);
+				$location.path('/');
+
+			}
+		});
+##
+### createController
+To Add new Item to TODOS List
+##
+app.controller('createController',function($scope,TODOS,$location){
+			$scope.update=false;
+			$scope.add=function(item){
+				TODOS.push(item);
+				console.log(TODOS.todos)
+				$location.path('/');
+			}
+		});
+##
