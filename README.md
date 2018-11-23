@@ -34,7 +34,7 @@ this app is working fine on localhost (I've used Wamp)
 			this.todos[index]=item;
 			console.log(this.todos)
 		}
-});
+	});
 ##
 
 # controllers 
