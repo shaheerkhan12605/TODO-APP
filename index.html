@@ -17,8 +17,9 @@
 				<a class="btn btn-primary btn-sm center" href="#!create">Add new TODO</a>
 			</div>
 		</div>
-	</div>
+			
 	<div ng-view></div>
+	</div>
 
 	<script>
 		var app = angular.module("myApp", ["ngRoute"]);
@@ -40,7 +41,7 @@
 		app.controller('listController',function($scope,TODOS){
 			$scope.todos=[];
 			$scope.getTodos=function(){
-				alert("here")
+// 				alert("here")
 				$scope.todos=TODOS.get();
 			};
 		});
